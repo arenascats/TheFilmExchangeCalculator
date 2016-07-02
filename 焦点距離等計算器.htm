@@ -1,0 +1,303 @@
+<html crossriderapp12687="true"><head>
+   <meta http-equiv="Content-Type" content="text/html; charset=ISO-2022-JP">
+   <title>焦点距離等計算器</title>
+   <script language="JavaScript">
+   <!--
+
+   var calcMethod = 0;
+
+   function changeFormat(f,from,to) {
+      var s = f.format.options[f.format.selectedIndex].value;
+      var n = s.indexOf(",");
+      f.x.value = s.substring(0,n);
+      f.y.value = s.substring(n + 1, s.length);
+      changeFormatValue(f,from,to);
+      return false;
+   }
+
+   function changeFormatValue(f,from,to) {
+      var x = parseFloat(f.x.value);
+      var y = parseFloat(f.y.value);
+      f.diagonal.value = Math.sqrt(x*x + y*y);
+      calc(from,to);
+      return false;
+   }
+
+   function ang(w, f) {
+      return 360.0 * Math.atan(w / 2.0 / f) / Math.PI;
+   }
+
+   function calc(from,to) {
+      var ratio, focallen;
+      if (calcMethod == 1) {
+         ratio = parseFloat(to.x.value) / parseFloat(from.x.value);
+      } else if (calcMethod == 2) {
+         ratio = parseFloat(to.y.value) / parseFloat(from.y.value);
+      } else {
+         ratio = parseFloat(to.diagonal.value) / parseFloat(from.diagonal.value);
+      }
+
+      focallen = parseFloat(from.FocalLength.value);
+      from.ang1.value = ang(parseFloat(from.diagonal.value), focallen);
+      from.ang2.value = ang(parseFloat(from.x.value), focallen);
+      from.ang3.value = ang(parseFloat(from.y.value), focallen);
+
+      focallen = focallen * ratio;
+      to.FocalLength.value = focallen;
+      to.FStop.value = parseFloat(from.FStop.value) * ratio;
+
+      to.ang1.value = ang(parseFloat(to.diagonal.value), focallen);
+      to.ang2.value = ang(parseFloat(to.x.value), focallen);
+      to.ang3.value = ang(parseFloat(to.y.value), focallen);
+
+      return false;
+   }
+
+   function changeCalcMethod(f,from,to) {
+      calcMethod = f.calcMethod.selectedIndex;
+      calc(from,to);
+   }
+   
+   // -->
+   </script>
+</head>
+<body>
+<center><h1>焦点距離等計算器</h1></center>
+<hr>
+<small>
+<em>注意:</em>只有支持Javascript的&#27983;&#35272;器才能正常&#26174;示&#35813;&#39029;面。人生第一次用Javascript，可能会有各&#31181;各&#26679;的&#38382;&#39064;<br>
+</small>
+<hr>
+
+<form name="f0" onsubmit="return false">
+<center>
+<table border="">
+<tbody><tr>
+   <th>&#36716;&#25442;方式</th>
+   <td><select name="calcMethod" onchange="changeCalcMethod(f0,f1,f2)">
+       <option selected="selected" value="0">&#23545;角&#32447;方向的焦距一&#26679;</option><option value="1">&#38271;&#36793;方向的焦距一&#26679;
+       </option><option value="2">短&#36793;方向的焦距一&#26679;</option></select>
+</td></tr>
+</tbody></table>
+</center>
+</form>
+
+<center>
+<table>
+<tbody><tr>
+<td>
+<form name="f1" onsubmit="return false">
+<table border="">
+<tbody><tr>
+  <th><font color="#FF0000">焦距</font></th>
+  <td><select name="format" onchange="changeFormat(f1,f1,f2)">
+      <option selected="selected" value="36,24">35mm &#24469;&#21345;大小
+      </option><option value="56,41.5">中画幅 6x4.5
+      </option><option value="56,56">中画幅 6x6
+      </option><option value="69,56">中画幅 6x7
+      </option><option value="76,56">中画幅 6x8
+      </option><option value="82.6,56">中画幅 6x9
+      </option><option value="120,95">4x5大画幅
+      </option><option value="170,121">5x7大画幅
+      </option><option value="245,194">8x10大画幅
+      </option><option value="295,245">10x12大画幅
+      </option><option value="30.2,16.7">APS H
+      </option><option value="25,16.7">APS C
+      </option><option value="30.2,10">APS P
+      </option><option value="28,28">布朗尼(126)
+      </option><option value="17,13">口袋机(110)
+      </option><option value="10,8">&#30424;片相机</option><option value="11,8">美&#35834;&#26102;minox</option><option value="36,12">35mm 全景相机
+      </option><option value="24,17">35mm 半幅
+      </option><option value="24,24">35mm 方幅
+      </option><option value="32,24">35mm Nikon I
+      </option><option value="34,24">35mm Nikon M/S
+      </option><option value="54,24">35mm Mamiya 6MF
+      </option><option value="65,24">35mm XPan/TX-1, Mamiya 7
+      </option><option value="23.7,15.6">Nikon DX / Fuji S*Pro / EPSON R-D1
+      </option><option value="23.5,15.7">Pentax DSLR
+      </option><option value="22.7,15.1">Canon EOS APS-C (Kiss D, D30, etc.)
+      </option><option value="28.7,19.1">Canon EOS APS-H (1DN, etc.)
+      </option><option value="20.7,13.8">Sigma SD9/SD10
+      </option><option value="27,18">Leica M8
+      </option><option value="18,13.5">Four Thirds System
+      </option><option value="44,33">Pentax 645D
+      </option><option value="48,36">Mamiya ZD
+      </option><option value="14,9.3">Kodak DCS 315
+      </option><option value="18.1,13.5">Kodak DCS 330
+      </option><option value="22.8,15.5">Kodak DCS 520/620, Canon EOS D2000
+      </option><option value="27.6,18.4">Kodak DCS 460/560/660/760, Canon EOS D6000
+      </option><option value="10.8,8.6">SiliconFilm EFS-1
+      </option><option value="73,55">ポラロイド JOYCAM
+      </option><option value="79,78">ポラロイド 600
+      </option><option value="91,72">ポラロイド Spectra
+      </option><option value="86,83">ポラロイド 80
+      </option><option value="108,85">ポラロイド スタンダード
+      </option></select>
+  </td>
+</tr><tr>
+  <th>&#38271;&#36793;</th>
+  <td><input name="x" value="36" size="12" onchange="changeFormatValue(f1,f1,f2)">
+  mm</td>
+</tr>
+<tr>
+  <th>短&#36793;</th>
+  <td><input name="y" value="24" size="12" onchange="changeFormatValue(f1,f1,f2)">
+  mm</td>
+</tr>
+<tr>
+  <th>&#23545;角&#32447;</th>
+  <td><input name="diagonal" value="43.3" size="12" onchange="calc(f1,f2)">
+  mm</td>
+</tr>
+<tr>
+  <th><font color="#FF0000">焦点距離</font></th>
+  <td><input name="FocalLength" value="50" size="12" onchange="calc(f1,f2)">
+  mm</td>
+</tr>
+<tr>
+  <th><font color="#FF0000">Ｆ値</font></th>
+  <td><input name="FStop" value="2.8" size="12" onchange="calc(f1,f2)"></td>
+</tr>
+<tr>
+   <th>&#23545;角&#32447;画角</th>
+   <td><input name="ang1" value="46.82522317790026" size="12">°(表示のみ)</td>
+</tr>
+<tr>
+   <th>&#38271;&#36793;画角</th>
+   <td><input name="ang2" value="39.59775270904986" size="12">°(表示のみ)</td>
+</tr>
+<tr>
+   <th>短&#36793;画角</th>
+   <td><input name="ang3" value="26.991466561591626" size="12">°(表示のみ)</td>
+</tr>
+</tbody></table>
+</form>
+</td>
+
+<td>
+<form name="f2" onsubmit="return false">
+<table border="">
+<tbody><tr>
+  <th><font color="#FF0000">フォーマット</font></th>
+  <td><select name="format" onchange="changeFormat(f2,f1,f2)">
+      <option selected="selected" value="36,24">35mm ライカ判
+      </option><option value="56,41.5">ブローニー 6x4.5
+      </option><option value="56,56">ブローニー 6x6
+      </option><option value="69,56">ブローニー 6x7
+      </option><option value="76,56">ブローニー 6x8
+      </option><option value="82.6,56">ブローニー 6x9
+      </option><option value="120,95">4x5インチ
+      </option><option value="170,121">5x7インチ
+      </option><option value="245,194">8x10インチ
+      </option><option value="295,245">10x12インチ
+      </option><option value="30.2,16.7">APS H
+      </option><option value="25,16.7">APS C
+      </option><option value="30.2,10">APS P
+      </option><option value="28,28">インスタマチック(126)
+      </option><option value="17,13">ポケット(110)
+      </option><option value="10,8">ディスク
+      </option><option value="11,8">ミノックス
+      </option><option value="36,12">35mm パノラマ
+      </option><option value="24,17">35mm ハーフ判
+      </option><option value="24,24">35mm スクェア
+      </option><option value="32,24">35mm Nikon I
+      </option><option value="34,24">35mm Nikon M/S
+      </option><option value="54,24">35mm Mamiya 6MF
+      </option><option value="65,24">35mm XPan/TX-1, Mamiya 7
+      </option><option value="23.7,15.6">Nikon DX / Fuji S*Pro / EPSON R-D1
+      </option><option value="23.5,15.7">Pentax DSLR
+      </option><option value="22.7,15.1">Canon EOS APS-C (Kiss D, D30, etc.)
+      </option><option value="28.7,19.1">Canon EOS APS-H (1DN, etc.)
+      </option><option value="20.7,13.8">Sigma SD9/SD10
+      </option><option value="27,18">Leica M8
+      </option><option value="18,13.5">Four Thirds System
+      </option><option value="44,33">Pentax 645D
+      </option><option value="48,36">Mamiya ZD
+      </option><option value="14,9.3">Kodak DCS 315
+      </option><option value="18.1,13.5">Kodak DCS 330
+      </option><option value="22.8,15.5">Kodak DCS 520/620, Canon EOS D2000
+      </option><option value="27.6,18.4">Kodak DCS 460/560/660/760, Canon EOS D6000
+      </option><option value="10.8,8.6">SiliconFilm EFS-1
+      </option><option value="73,55">ポラロイド JOYCAM
+      </option><option value="79,78">ポラロイド 600
+      </option><option value="91,72">ポラロイド Spectra
+      </option><option value="86,83">ポラロイド 80
+      </option><option value="108,85">ポラロイド スタンダード
+      </option></select>
+  </td>
+</tr><tr>
+  <th>長辺</th>
+  <td><input name="x" value="36" size="12" onchange="changeFormatValue(f2,f1,f2)">
+  mm</td>
+</tr>
+<tr>
+  <th>短辺</th>
+  <td><input name="y" value="24" size="12" onchange="changeFormatValue(f2,f1,f2)">
+  mm</td>
+</tr>
+<tr>
+  <th>対角線</th>
+  <td><input name="diagonal" value="43.266615305567875" size="12" onchange="calc(f1,f2)">
+  mm</td>
+</tr>
+<tr>
+  <th>焦点距離</th>
+  <td><input name="FocalLength" value="49.96144954453566" size="12" onchange="calc(f2,f1)">
+  mm</td>
+</tr>
+<tr>
+  <th>Ｆ値</th>
+  <td><input name="FStop" value="2.7978411744939966" size="12" onchange="calc(f2,f1)"></td>
+</tr>
+<tr>
+   <th>対角線画角</th>
+   <td><input name="ang1" value="46.82522317790025" size="12">°(表示のみ)</td>
+</tr>
+<tr>
+   <th>長辺画角</th>
+   <td><input name="ang2" value="39.625929172025224" size="12">°(表示のみ)</td>
+</tr>
+<tr>
+   <th>短辺画角</th>
+   <td><input name="ang3" value="27.01153061412203" size="12">°(表示のみ)</td>
+</tr>
+</tbody></table>
+</form>
+</td>
+</tr>
+</tbody></table>
+</center>
+
+<hr>
+
+<p>&#34429;然&#23545;于中画幅和大画幅的&#23545;&#24212;焦距不太了解、
+没有&#35273;得比&#36739;疑惑&#21527;？
+使用&#36825;个&#39029;面就好了，
+可以&#35745;算画幅大小和相&#23545;&#24212;的焦距。
+</p><p>使用方法非常&#31616;&#21333;。只要将数&#20540;填入表中，就可以自&#21160;&#35745;算出右&#36793;表格&#23545;&#24212;的&#38236;&#22836;焦距&#35270;角。
+（填入数&#20540;后&#35831;按TAB&#38190;）
+</p>
+<p>只要填入&#38271;&#36793;和短&#36793;就能自&#21160;算出&#23545;角&#32447;、
+&#36824;有就是指定焦距就OK了。
+&#20026;<font color="#FF0000">&#32418;字</font>的地方就不要&#32039;了</p>
+<p>&#35745;算&#23545;角&#32447;焦距，&#38271;&#36793;和短&#36793;都是用一&#26679;的方法来&#35745;算的。
+（&#23545;角&#32447;焦距用&#38271;&#36793;焦距的情况比&#36739;多&#21543;？）</p>
+<p>&#36824;可以&#35745;算得到等价的光圈&#20540;</p>
+<hr>
+<div align="CENTER">感想のメールは
+<a href="mailto:okayan@c-creators.co.jp">こちら</a>まで</div><br>
+<div align="CENTER"><a href="http://www.okayan.jp/">おかやんのホームページへ戻る</a></div><br>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="%E7%84%A6%E7%82%B9%E8%B7%9D%E9%9B%A2%E7%AD%89%E8%A8%88%E7%AE%97%E5%99%A8_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-10722991-2");
+pageTracker._trackPageview();
+} catch(err) {} </script>
+
+
+
+</body></html>
